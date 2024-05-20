@@ -13,7 +13,7 @@ import LoopKitUI
 
 public final class LoopSupportUI: SupportUI {
 
-    public static var supportIdentifier: String = "LoopSupportUI"
+    public static var pluginIdentifier: String = "LoopSupportUI"
 
     private var analytics = LoopKitAnalytics.shared
 
@@ -66,7 +66,7 @@ public final class LoopSupportUI: SupportUI {
 // LoopSupport also provides analytics
 extension LoopSupportUI: AnalyticsService {
 
-    public static var localizedTitle = LocalizedString("Loopkit 分析", comment: "Title for LoopKit Analytics")
+    public static var localizedTitle = LocalizedString("Loopkit Analytics", comment: "Title for LoopKit Analytics")
 
     public func recordAnalyticsEvent(_ name: String, withProperties properties: [AnyHashable : Any]?, outOfSession: Bool) {
         analytics.recordAnalyticsEvent(name, withProperties: properties, outOfSession: outOfSession)
@@ -76,10 +76,20 @@ extension LoopSupportUI: AnalyticsService {
         analytics.recordIdentify(property, value: value)
     }
 
+    public func recordIdentify(_ property: String, array: [String]) {
+        analytics.recordIdentify(property, array: array)
+    }
 
     public static var serviceIdentifier = "LoopKitAnalytics"
 
     public var serviceDelegate: LoopKit.ServiceDelegate? {
+        get {
+            return nil
+        }
+        set(newValue) {}
+    }
+    
+    public var stateDelegate: LoopKit.StatefulPluggableDelegate? {
         get {
             return nil
         }
